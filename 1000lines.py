@@ -19,6 +19,7 @@ def name_list_maker(num_candidates):
 	s = set()
 	while (len(s) < num_candidates):
 		s.add(random.randint(1,len(names)))
+	print ("Length of s: ", len(s))
 	count = 0
 	for n in list(s):
 		candidates[count] = names[n]
@@ -46,9 +47,7 @@ def print_ballots(ballot_list):
 	print()
  
 def election():
-	global names
- 
-	read_names()
+
 	num_candidates = get_num_candidates()
 	name_list = name_list_maker(num_candidates)
 	ballot_list = ballots(num_candidates)
@@ -57,10 +56,14 @@ def election():
 		print(n)
 	print_ballots(ballot_list)
  
+def clear_election_cycle():
+	pass
+
 def main():
 	num_elections = input()
 	print(num_elections + "\n")
 	num_elections = int(num_elections)
+	read_names()
 	while(num_elections > 0):
 		election()
 		num_elections -= 1
