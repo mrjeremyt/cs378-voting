@@ -17,6 +17,8 @@
 
 void run_elections(std::istream&, std::ostream&);
 
-int read_num_elections(std::istream&, std::ostream&);
+int read_num_candidates(std::istream&);
+
+void read_candidates(std::istream& in, int num_candidates);
 
 #endif // Voting_h

@@ -36,9 +36,6 @@ To document the program:
 #include "Voting.h"
 
 
-
-
-
 int main()
 {
 	using namespace std;

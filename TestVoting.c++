@@ -50,26 +50,28 @@ To obtain coverage of the test:
 // -------------------
 TEST(Voting, read_num_elections_1)
 {
-	const int c = read_num_elections(1);
+	const int c = read_num_candidates(1);
 	ASSERT_EQ(1,c);
 }
 TEST(Voting, read_num_elections_2)
 {
-	const int c = read_num_elections(20);
+    std::istringstream r("20\n");   
+	const int c = read_num_candidates(r);
 	ASSERT_EQ(20,c);	
 }
 TEST(Voting, read_num_elections_3)
 {
-	const int c = read_num_elections(9001);
+	const int c = read_num_candidates(9001);
 	ASSERT_EQ(9001,c);	
 }
 
 // -------------------
 // read_num_candidates
 // -------------------
-TEST(Voting, read_num_candidates_1)
+/*TEST(Voting, read_num_candidates_1)
 {
-	const int c = read_num_candidates(20);
+    std::istringstream r("Bill Gates\nWolverine\nDoctor Who\n");
+	const int c = read_candidates(r,3);
 	ASSERT_EQ(20,c);		
 }
 
@@ -77,4 +79,4 @@ TEST(Voting, read_candidates)
 {
 	std::istringstream r("Bill Gates\nWolverine\nDoctor Who\n");
 	//Need to return a data structure and evaluate.
-}
+}*/
