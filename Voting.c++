@@ -14,6 +14,8 @@
 #include <utility>  // make_pair, pair
 #include <algorithm>
 #include <string>
+#include <sstream>
+#include <iterator>
 
 
 #include "Voting.h"
@@ -24,23 +26,37 @@ class Ballot
 public:
 	Ballot(vector<int>& v);
 	vector<int> vec;
-	~Ballot();
-	vector<int> get_ballot(){return vec;}
+	//~Ballot();
+	vector<int> getBallot(){return vec;}
 	int current_counted_index;
 };
 
 Ballot::Ballot(vector<int>& v)
 {
 	vec = v;
+	current_counted_index = 0;
 }
 
-vector<vector<int>> get_ballot_list(istream& in)
+vector<Ballot> get_ballot_list(istream& in)
 {
+	vector<Ballot> result;
 	string str;
 	while(getline(in, str) != 0)
 	{
-		
+		string token;
+		vector<int> choices;
+		vector<string> tokens;
+		istringstream iss(str);
+		while(iss >> token)
+			{ 
+				int n;
+				istringstream (token) >> n;
+				choices.push_back(n); 
+			}
+		Ballot b (choices);
+		result.push_back(b);
 	}
+	return result;
 }
 
 
@@ -74,8 +90,18 @@ void run_elections(std::istream& in, std::ostream& out)
 	candidates.reserve(20);
 	int num_candidates = read_num_candidates(in);
 	read_candidates(cin, num_candidates, candidates);
-	vector<vector<int>> ballot_list = get_ballot_list(in);
+	vector<Ballot> ballot_list = get_ballot_list(in);
 	cout << candidates.front() << endl;
+	for(unsigned int i = 0; i < ballot_list.size(); i++)
+	{
+		Ballot b = ballot_list[i];
+		vector<int> v = b.getBallot();
+		for(unsigned int j = 0; j < v.size(); j++)
+		{
+			cout << v[j];
+		}
+		cout << endl;
+	}
 
 }
 

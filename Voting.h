@@ -15,6 +15,7 @@
 #include <iostream>
 #include <utility>
 
+
 void run_elections(std::istream&, std::ostream&);
 
 int read_num_candidates(std::istream&);

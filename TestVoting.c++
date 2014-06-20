@@ -65,6 +65,7 @@ TEST(Voting, read_num_elections_3)
 	ASSERT_EQ(9001,c);	
 }
 
+
 // -------------------
 // read_num_candidates
 // -------------------
