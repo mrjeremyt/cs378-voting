@@ -1,11 +1,9 @@
-#include <iostream> // cout, endl
-#include <sstream>  // istringtstream, ostringstream
-#include <string>   // ==
-#include <utility>  // make_pair, pair
-
-#include "gtest/gtest.h"
-
-#include "Voting.h"
+// --------------------------------
+// projects/Voting/TestVoting.c++
+// Copyright (C) 2014
+// Jeremy Thompson
+// Daniel Durbin
+// --------------------------------
 
 /*
 Google Test Libraries:
@@ -33,6 +31,19 @@ To run the test:
 To obtain coverage of the test:
     % gcov-4.7 -b Voting.c++ TestVoting.c++
 */
+
+// --------
+// includes
+// --------
+
+#include <iostream> // cout, endl
+#include <sstream>  // istringtstream, ostringstream
+#include <string>   // ==
+#include <utility>  // make_pair, pair
+
+#include "gtest/gtest.h"
+
+#include "Voting.h"
 
 // -------------------
 // read_num_elections
