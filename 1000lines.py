@@ -19,7 +19,6 @@ def name_list_maker(num_candidates):
 	s = set()
 	while (len(s) < num_candidates):
 		s.add(random.randint(1,len(names)))
-	print ("Length of s: ", len(s))
 	count = 0
 	for n in list(s):
 		candidates[count] = names[n]
