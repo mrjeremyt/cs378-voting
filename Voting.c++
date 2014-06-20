@@ -21,21 +21,15 @@
 #include "Voting.h"
 using namespace std;
 
-class Ballot
-{
-public:
-	Ballot(vector<int>& v);
-	vector<int> vec;
-	//~Ballot();
-	vector<int> getBallot(){return vec;}
-	int current_counted_index;
-};
+
 
 Ballot::Ballot(vector<int>& v)
 {
 	vec = v;
 	current_counted_index = 0;
 }
+
+vector<int> Ballot::getBallot(){return vec;}
 
 vector<Ballot> get_ballot_list(istream& in)
 {
