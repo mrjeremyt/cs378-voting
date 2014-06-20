@@ -21,9 +21,9 @@ using namespace std;
 
 class Ballot
 {
-	vector<int> vec;
 public:
 	Ballot(vector<int>& v);
+	vector<int> vec;
 	~Ballot();
 	vector<int> get_ballot(){return vec;}
 	int current_counted_index;
@@ -33,6 +33,16 @@ Ballot::Ballot(vector<int>& v)
 {
 	vec = v;
 }
+
+vector<vector<int>> get_ballot_list(istream& in)
+{
+	string str;
+	while(getline(in, str) != 0)
+	{
+		
+	}
+}
+
 
 void read_candidates(std::istream& in, int num_candidates, vector<string>& candidates)
 {
@@ -64,6 +74,7 @@ void run_elections(std::istream& in, std::ostream& out)
 	candidates.reserve(20);
 	int num_candidates = read_num_candidates(in);
 	read_candidates(cin, num_candidates, candidates);
+	vector<vector<int>> ballot_list = get_ballot_list(in);
 	cout << candidates.front() << endl;
 
 }
