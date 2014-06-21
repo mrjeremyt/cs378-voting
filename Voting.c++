@@ -39,12 +39,26 @@ vector<int> Ballot::getBallot(){return vec;}
 // ----------------------------------
 
 
-vector<int> evaluate(vector<Ballot> ballot_list)
+vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 {
 	vector<int> winners;
+	vector<int> candidates;
+	for(int i = 0; i < num_candidates+1; i++){candidates.push_back(0);}
+	for(unsigned int i = 0; i < ballot_list.size(); i++)
+	{
+		Ballot b = ballot_list[i];
+		vector<int> v = b.getBallot();
+		int cand = v[b.current_counted_index];
+		candidates[cand] += 1;
+	}
 
-
-
+	int highest_votes = -1;
+	for(unsigned int i = 1; i < candidates.size(); i++)
+		{
+			if(candidates[i] > highest_votes) 
+				highest_votes = i-1;
+		}
+	winners.push_back(highest_votes);
 	return winners;
 }
 
@@ -58,6 +72,8 @@ vector<Ballot> get_ballot_list(istream& in)
 	string str;
 	while(getline(in, str) != 0)
 	{
+		if(str.empty())
+			break;
 		string token;
 		vector<int> choices;
 		vector<string> tokens;
@@ -137,9 +153,10 @@ void run_elections(istream& in, ostream& out)
 	int num_candidates = read_num_candidates(in);
 	candidates = read_candidates(in, num_candidates);
 	vector<Ballot> ballot_list = get_ballot_list(in);
-	print_candidate_list(candidates);
-
-	print_ballot_list(ballot_list);
+	vector<int> winner = evaluate(ballot_list, num_candidates);
+	//print_candidate_list(candidates);
+	//print_ballot_list(ballot_list);
+	out << candidates[winner[0]];
 
 
 }

@@ -44,6 +44,8 @@ int main()
 	while (num_elections > 0)
 	{
 		run_elections(cin,cout);
+        if(num_elections > 1)
+            cout << "\n" << endl;
 		num_elections--;
 	}
 	return 0;

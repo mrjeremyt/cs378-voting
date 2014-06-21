@@ -44,6 +44,6 @@ void print_ballot_list(vector<Ballot> ballot_list);
 
 void print_candidate_list(vector<string> candidate_list);
 
-vector<int> evaluate(vector<Ballot> ballot_list);
+vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates);
 
 #endif // Voting_h

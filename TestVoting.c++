@@ -109,10 +109,10 @@ TEST(Voting, read_candidates_2)
 
 TEST(Voting, read_candidates_3)
 {
-    std::istringstream r("Albus Percival Wulfric Brian Dumbledore\nCharles 'Chewie' Chewbacca (Furv2l)\nAragorn, Son of Arathor aka: Elessar Telcontar, Estel, Strider, and Wingfoot\nAquaman\n");
+    std::istringstream r("Albus Percival Wulfric Brian Dumbledore\nCharles 'Chewie' Chewbacca (Furball)\nAragorn, Son of Arathor aka: Elessar Telcontar, Estel, Strider, and Wingfoot\nAquaman\n");
     const std::vector<string> v = read_candidates(r,4);
     string dumbledore = "Albus Percival Wulfric Brian Dumbledore";
-    string chewie = "Charles 'Chewie' Chewbacca (Furv2l)";
+    string chewie = "Charles 'Chewie' Chewbacca (Furball)";
     string aragorn = "Aragorn, Son of Arathor aka: Elessar Telcontar, Estel, Strider, and Wingfoot";
     string Aquaman = "Aquaman";
     std::vector<string> test;
@@ -125,9 +125,9 @@ TEST(Voting, read_candidates_3)
 
 TEST(Voting, read_candidates_4)
 {
-    std::istringstream r("Charles 'Chewie' Chewbacca (Furv2l)\nAquaman\n");
+    std::istringstream r("Charles 'Chewie' Chewbacca (Furball)\nAquaman\n");
     const std::vector<string> v = read_candidates(r,2);
-    string chewie = "Charles 'Chewie' Chewbacca (Furv2l)";
+    string chewie = "Charles 'Chewie' Chewbacca (Furball)";
     string Aquaman = "Aquaman";
     std::vector<string> test;
     test.push_back(chewie);
