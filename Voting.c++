@@ -124,6 +124,7 @@ void run_elections(istringstream& in, ostringstream& out)
 	candidates = read_candidates(in, num_candidates);
 	vector<Ballot> ballot_list = get_ballot_list(in);
 	print_candidate_list(candidates);
+	
 	print_ballot_list(ballot_list);
 
 
