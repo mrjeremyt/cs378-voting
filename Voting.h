@@ -32,12 +32,16 @@ public:
 	int current_counted_index;
 };
 
-void run_elections(istream&, ostream&);
+void run_elections(istringstream&, ostringstream&);
 
-int read_num_candidates(istream&);
+int read_num_candidates(istringstream&);
 
-void read_candidates(istream& in, int num_candidates, vector<string>& candidates);
+vector<string> read_candidates(istringstream& in, int num_candidates);
 
-vector<Ballot> get_ballot_list(istream& in);
+vector<Ballot> get_ballot_list(istringstream& in);
+
+void print_ballot_list(vector<Ballot> ballot_list);
+
+void print_candidate_list(vector<string> candidate_list);
 
 #endif // Voting_h

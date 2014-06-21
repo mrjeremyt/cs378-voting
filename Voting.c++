@@ -9,19 +9,21 @@
 // includes
 // --------
 
-#include <cassert>  // assert
-#include <iostream> // endl, istream, ostream
-#include <utility>  // make_pair, pair
-#include <algorithm>
-#include <string>
-#include <sstream>
-#include <iterator>
+// #include <cassert>  // assert
+// #include <iostream> // endl, istream, ostream
+// #include <utility>  // make_pair, pair
+// #include <algorithm>
+// #include <string>
+// #include <sstream>
+// #include <iterator>
 
 
 #include "Voting.h"
 using namespace std;
 
-
+// -------------------------
+// Balllot class definitions
+// -------------------------
 
 Ballot::Ballot(vector<int>& v)
 {
@@ -31,7 +33,12 @@ Ballot::Ballot(vector<int>& v)
 
 vector<int> Ballot::getBallot(){return vec;}
 
-vector<Ballot> get_ballot_list(istream& in)
+
+// -------------------------------
+// parses and collects the ballots
+// -------------------------------
+
+vector<Ballot> get_ballot_list(istringstream& in)
 {
 	vector<Ballot> result;
 	string str;
@@ -53,9 +60,36 @@ vector<Ballot> get_ballot_list(istream& in)
 	return result;
 }
 
-
-void read_candidates(std::istream& in, int num_candidates, vector<string>& candidates)
+void print_ballot_list(vector<Ballot> ballot_list)
 {
+	for(unsigned int i = 0; i < ballot_list.size(); i++)
+	{
+		Ballot b = ballot_list[i];
+		vector<int> v = b.getBallot();
+		for(unsigned int j = 0; j < v.size(); j++)
+		{
+			cout << v[j];
+		}
+		cout << endl;
+	}
+}
+
+void print_candidate_list(vector<string> candidate_list)
+{
+	for(unsigned int i = 0; i < candidate_list.size(); i++)
+	{
+		cout << candidate_list[i] << endl;
+	}
+
+}
+
+// ------------------------------
+// puts candidates in a container
+// ------------------------------
+
+vector<string> read_candidates(istringstream& in, int num_candidates)
+{
+	vector<string> candidates;
 	while(num_candidates > 0)
 	{
 		string a;
@@ -68,34 +102,30 @@ void read_candidates(std::istream& in, int num_candidates, vector<string>& candi
 			num_candidates--;
 		}
 	}
+	return candidates;
 }
 
-int read_num_candidates(istream& in)
+int read_num_candidates(istringstream& in)
 {
 	int i = 0;
-	cin >> i;
+	in >> i;
 	return i;
 }
 
+// ----------------------------------
+// functions that runs each elections
+// ----------------------------------
 
-void run_elections(std::istream& in, std::ostream& out)
+void run_elections(istringstream& in, ostringstream& out)
 {
 	vector<string> candidates;
 	candidates.reserve(20);
 	int num_candidates = read_num_candidates(in);
-	read_candidates(cin, num_candidates, candidates);
+	candidates = read_candidates(in, num_candidates);
 	vector<Ballot> ballot_list = get_ballot_list(in);
-	cout << candidates.front() << endl;
-	for(unsigned int i = 0; i < ballot_list.size(); i++)
-	{
-		Ballot b = ballot_list[i];
-		vector<int> v = b.getBallot();
-		for(unsigned int j = 0; j < v.size(); j++)
-		{
-			cout << v[j];
-		}
-		cout << endl;
-	}
+	print_candidate_list(candidates);
+	print_ballot_list(ballot_list);
+
 
 }
 

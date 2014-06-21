@@ -36,48 +36,195 @@ To obtain coverage of the test:
 // includes
 // --------
 
-#include <iostream> // cout, endl
-#include <sstream>  // istringtstream, ostringstream
-#include <string>   // ==
-#include <utility>  // make_pair, pair
+// #include <cassert>  // assert
+// //#include <iostream> // endl, istream, ostream
+// #include <utility>  // make_pair, pair
+// //#include <algorithm>
+// #include <string>
+// #include <sstream>
+// #include <iterator>
 
 #include "gtest/gtest.h"
 
 #include "Voting.h"
 
-// -------------------
-// read_num_elections
-// -------------------
-TEST(Voting, read_num_elections_1)
-{
-	const int c = read_num_candidates(1);
-	ASSERT_EQ(1,c);
-}
-TEST(Voting, read_num_elections_2)
-{
-    std::istringstream r("20\n");   
-	const int c = read_num_candidates(r);
-	ASSERT_EQ(20,c);	
-}
-TEST(Voting, read_num_elections_3)
-{
-	const int c = read_num_candidates(9001);
-	ASSERT_EQ(9001,c);	
-}
-
+using namespace std;
 
 // -------------------
 // read_num_candidates
 // -------------------
-/*TEST(Voting, read_num_candidates_1)
+TEST(Voting, read_num_candidates_1)
 {
-    std::istringstream r("Bill Gates\nWolverine\nDoctor Who\n");
-	const int c = read_candidates(r,3);
-	ASSERT_EQ(20,c);		
+    istringstream r("1\n");
+	const int c = read_num_candidates(r);
+	ASSERT_EQ(1,c);
+}
+TEST(Voting, read_num_candidates_2)
+{
+    istringstream r("20\n");   
+	const int c = read_num_candidates(r);
+	ASSERT_EQ(20,c);	
+}
+TEST(Voting, read_num_candidates_3)
+{
+    istringstream r("9001\n");
+	const int c = read_num_candidates(r);
+	ASSERT_EQ(9001,c);	
+}
+TEST(Voting, read_num_candidates_4)
+{
+    istringstream r("12342134\n");
+    const int c = read_num_candidates(r);
+    ASSERT_EQ(12342134,c);  
 }
 
-TEST(Voting, read_candidates)
+
+
+// -------------------
+// read_candidates
+// -------------------
+TEST(Voting, read_candidates_1)
 {
-	std::istringstream r("Bill Gates\nWolverine\nDoctor Who\n");
-	//Need to return a data structure and evaluate.
-}*/
+    std::istringstream r("Bill Gates\nWolverine\nDoctor Who\n");
+	const std::vector<string> v = read_candidates(r,3);
+    string bill = "Bill Gates";
+    string claws = "Wolverine";
+    string who = "Doctor Who";
+    std::vector<string> test;
+    test.push_back(bill);
+    test.push_back(claws);
+    test.push_back(who);
+	ASSERT_EQ(test,v);		
+}
+
+TEST(Voting, read_candidates_2)
+{
+    std::istringstream r("Spock\n");
+    const std::vector<string> v = read_candidates(r,1);
+    string spock = "Spock";
+    std::vector<string> test;
+    test.push_back(spock);
+    ASSERT_EQ(test,v);      
+}
+
+TEST(Voting, read_candidates_3)
+{
+    std::istringstream r("Albus Percival Wulfric Brian Dumbledore\nCharles 'Chewie' Chewbacca (Furv2l)\nAragorn, Son of Arathor aka: Elessar Telcontar, Estel, Strider, and Wingfoot\nAquaman\n");
+    const std::vector<string> v = read_candidates(r,4);
+    string dumbledore = "Albus Percival Wulfric Brian Dumbledore";
+    string chewie = "Charles 'Chewie' Chewbacca (Furv2l)";
+    string aragorn = "Aragorn, Son of Arathor aka: Elessar Telcontar, Estel, Strider, and Wingfoot";
+    string Aquaman = "Aquaman";
+    std::vector<string> test;
+    test.push_back(dumbledore);
+    test.push_back(chewie);
+    test.push_back(aragorn);
+    test.push_back(Aquaman);
+    ASSERT_EQ(test,v);      
+}
+
+TEST(Voting, read_candidates_4)
+{
+    std::istringstream r("Charles 'Chewie' Chewbacca (Furv2l)\nAquaman\n");
+    const std::vector<string> v = read_candidates(r,2);
+    string chewie = "Charles 'Chewie' Chewbacca (Furv2l)";
+    string Aquaman = "Aquaman";
+    std::vector<string> test;
+    test.push_back(chewie);
+    test.push_back(Aquaman);
+    ASSERT_EQ(test,v);      
+}
+
+// -------------------
+// get_ballot_list
+// -------------------
+
+TEST(Voting, get_ballot_list_1)
+{
+    std::istringstream r("1 3 2 4\n");
+    std::vector<Ballot> v = get_ballot_list(r);
+    std::vector<int> v1;
+    v1.push_back(1);
+    v1.push_back(3);
+    v1.push_back(2);
+    v1.push_back(4);
+    std::vector<int> returned = v[0].getBallot();
+    ASSERT_EQ(v1, returned);
+}
+
+TEST(Voting, get_ballot_list_2)
+{
+    std::istringstream r("1 3 2 4\n1 2 4 3\n");
+    std::vector<Ballot> v = get_ballot_list(r);
+    std::vector<int> v1;
+    v1.push_back(1);
+    v1.push_back(3);
+    v1.push_back(2);
+    v1.push_back(4);
+    std::vector<int> v2;
+    v2.push_back(1);
+    v2.push_back(2);
+    v2.push_back(4);
+    v2.push_back(3);
+    std::vector<int> returned_1 = v[0].getBallot();
+    std::vector<int> returned_2 = v[1].getBallot();
+    ASSERT_EQ(v1, returned_1);
+    ASSERT_EQ(v2, returned_2);
+}
+
+TEST(Voting, get_ballot_list_3)
+{
+    std::istringstream r("1 3 2 4\n1 2 4 3\n3 2 4 1\n");
+    std::vector<Ballot> v = get_ballot_list(r);
+    std::vector<int> v1;
+    v1.push_back(1);
+    v1.push_back(3);
+    v1.push_back(2);
+    v1.push_back(4);
+    std::vector<int> v2;
+    v2.push_back(1);
+    v2.push_back(2);
+    v2.push_back(4);
+    v2.push_back(3);
+    std::vector<int> v3;
+    v3.push_back(3);
+    v3.push_back(2);
+    v3.push_back(4);
+    v3.push_back(1);
+    std::vector<int> returned_1 = v[0].getBallot();
+    std::vector<int> returned_2 = v[1].getBallot();
+    std::vector<int> returned_3 = v[2].getBallot();
+    ASSERT_EQ(v1, returned_1);
+    ASSERT_EQ(v2, returned_2);
+    ASSERT_EQ(v3, returned_3);
+}
+
+TEST(Voting, get_ballot_list_4)
+{
+    std::istringstream r("1 3 2 4 5\n1 5 2 4 3\n5 3 2 4 1\n");
+    std::vector<Ballot> v = get_ballot_list(r);
+    std::vector<int> v1;
+    v1.push_back(1);
+    v1.push_back(3);
+    v1.push_back(2);
+    v1.push_back(4);
+    v1.push_back(5);
+    std::vector<int> v2;
+    v2.push_back(1);
+    v2.push_back(5);
+    v2.push_back(2);
+    v2.push_back(4);
+    v2.push_back(3);
+    std::vector<int> v3;
+    v3.push_back(5);
+    v3.push_back(3);
+    v3.push_back(2);
+    v3.push_back(4);
+    v3.push_back(1);
+    std::vector<int> returned_1 = v[0].getBallot();
+    std::vector<int> returned_2 = v[1].getBallot();
+    std::vector<int> returned_3 = v[2].getBallot();
+    ASSERT_EQ(v1, returned_1);
+    ASSERT_EQ(v2, returned_2);
+    ASSERT_EQ(v3, returned_3);
+}
