@@ -34,11 +34,25 @@ Ballot::Ballot(vector<int>& v)
 vector<int> Ballot::getBallot(){return vec;}
 
 
+// ----------------------------------
+// evaluates the ballots for a winner
+// ----------------------------------
+
+
+vector<int> evaluate(vector<Ballot> ballot_list)
+{
+	vector<int> winners;
+
+
+
+	return winners;
+}
+
 // -------------------------------
 // parses and collects the ballots
 // -------------------------------
 
-vector<Ballot> get_ballot_list(istringstream& in)
+vector<Ballot> get_ballot_list(istream& in)
 {
 	vector<Ballot> result;
 	string str;
@@ -87,7 +101,7 @@ void print_candidate_list(vector<string> candidate_list)
 // puts candidates in a container
 // ------------------------------
 
-vector<string> read_candidates(istringstream& in, int num_candidates)
+vector<string> read_candidates(istream& in, int num_candidates)
 {
 	vector<string> candidates;
 	while(num_candidates > 0)
@@ -105,7 +119,7 @@ vector<string> read_candidates(istringstream& in, int num_candidates)
 	return candidates;
 }
 
-int read_num_candidates(istringstream& in)
+int read_num_candidates(istream& in)
 {
 	int i = 0;
 	in >> i;
@@ -116,7 +130,7 @@ int read_num_candidates(istringstream& in)
 // functions that runs each elections
 // ----------------------------------
 
-void run_elections(istringstream& in, ostringstream& out)
+void run_elections(istream& in, ostream& out)
 {
 	vector<string> candidates;
 	candidates.reserve(20);
@@ -124,7 +138,7 @@ void run_elections(istringstream& in, ostringstream& out)
 	candidates = read_candidates(in, num_candidates);
 	vector<Ballot> ballot_list = get_ballot_list(in);
 	print_candidate_list(candidates);
-	
+
 	print_ballot_list(ballot_list);
 
 

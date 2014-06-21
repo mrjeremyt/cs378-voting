@@ -37,11 +37,11 @@ To obtain coverage of the test:
 // --------
 
 // #include <cassert>  // assert
-// //#include <iostream> // endl, istream, ostream
+#include <iostream> // endl, istream, ostream
 // #include <utility>  // make_pair, pair
 // //#include <algorithm>
-// #include <string>
-// #include <sstream>
+#include <string>
+#include <sstream>
 // #include <iterator>
 
 #include "gtest/gtest.h"
