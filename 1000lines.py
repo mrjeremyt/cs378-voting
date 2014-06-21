@@ -20,8 +20,8 @@ def name_list_maker(num_candidates):
 	while (len(s) < num_candidates):
 		s.add(random.randint(1,len(names)))
 	count = 0
-	for n in list(s):
-		candidates[count] = names[n]
+	for n in s:
+		candidates[count] = names[n-1]
 		count += 1
 	return candidates
  
