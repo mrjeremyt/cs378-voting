@@ -49,8 +49,8 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 	
 	vector<int> losers;
 	losers.push_back(0);
-
-	while((num_candidates - (losers.size() - 1)) >= 2)
+	int while_check = (num_candidates - (losers.size() - 1));
+	while(while_check >= 2)
 	{
 		for(unsigned int i = 0; i < ballot_list.size(); i++) //Countes votes for each ballot.
 		{
@@ -67,20 +67,26 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 		}
 		if(candidates[highest_votes] >= majority) //Winner
 		{
+			cout << highest_votes;
+			cout << majority;
 			winners.push_back(highest_votes);
 			return winners;	
 		}
-		if(((num_candidates) - (losers.size() - 1)) == 2)
+		cout << while_check;
+		if(while_check == 2)
 		{
-			for(int i = 0; i < candidates.size(); i++)
+			cout << "hi";
+			for(unsigned int i = 0; i < candidates.size(); i++)
 			{
-				for(int j = 0; j < losers.size(); j++)
+				for(unsigned int j = 0; j < losers.size(); j++)
 				{
 					if(losers[j] == 1)
 						if(j != i)
 							winners.push_back(i);
 				}
 			}
+			for(auto elem: winners){cout << winners[elem];}
+			return winners;
 		}
 		int min_value =  *(min_element(candidates.begin()+1, candidates.end()));
 		for(unsigned int i = 1; i < candidates.size(); i++)
@@ -211,8 +217,18 @@ void run_elections(istream& in, ostream& out)
 	vector<int> winner = evaluate(ballot_list, num_candidates);
 	// print_candidate_list(candidates);
 	// print_ballot_list(ballot_list);
-	for(unsigned int i = 0; i < winner.size(); i++)
-		out << candidates[winner[i]] << endl;
+	if(winner.size() == 1)
+		out << candidates[winner[0]];
+	else
+	{
+		for(unsigned int i = 0; i < winner.size(); i++)
+		{
+			out << candidates[winner[i]];
+			if(i < (winner.size() - 1))
+				out << endl;
+		}
+	}
+
 
 
 }
