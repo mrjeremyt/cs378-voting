@@ -46,24 +46,74 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 	vector<int> candidates; //Stores tally of each candidate based on cand. index.
 	for(int i = 0; i < num_candidates+1; i++) //Placing 0s until we count ballots.
 		{candidates.push_back(0);}
-	for(unsigned int i = 0; i < ballot_list.size(); i++) //Countes votes for each ballot.
+	
+	vector<int> losers;
+	losers.push_back(0);
+
+	while((num_candidates - (losers.size() - 1)) >= 2)
 	{
-		Ballot b = ballot_list[i];
-		vector<int> v = b.getBallot();
-		int cand = v[b.current_counted_index];
-		candidates[cand] += 1;
+		for(unsigned int i = 0; i < ballot_list.size(); i++) //Countes votes for each ballot.
+		{
+			Ballot b = ballot_list[i];
+			vector<int> v = b.getBallot();
+			int cand = v[b.current_counted_index];
+			candidates[cand] += 1;
+		}
+		int highest_votes = -1;
+		for(unsigned int i = 1; i < candidates.size(); i++)
+		{
+			if(candidates[i] > candidates[highest_votes])
+				highest_votes = i;
+		}
+		if(candidates[highest_votes] >= majority) //Winner
+		{
+			winners.push_back(highest_votes);
+			return winners;	
+		}
+		if(((num_candidates) - (losers.size() - 1)) == 2)
+		{
+			for(int i = 0; i < candidates.size(); i++)
+			{
+				for(int j = 0; j < losers.size(); j++)
+				{
+					if(losers[j] == 1)
+						if(j != i)
+							winners.push_back(i);
+				}
+			}
+		}
+		int min_value =  *(min_element(candidates.begin()+1, candidates.end()));
+		for(unsigned int i = 1; i < candidates.size(); i++)
+		{
+			if(candidates[i] == min_value)
+				losers[i] = 1;
+		}
+		for(unsigned int i = 0; i < ballot_list.size(); i++)
+		{
+			Ballot b = ballot_list[i];
+			bool increased_index = true;
+			while (increased_index)
+			{
+				increased_index = check_losers(losers,b);
+			}
+		}
 	}
 
-	int highest_votes = -1;
-	for(unsigned int i = 1; i < candidates.size(); i++)
-	{
-		if(candidates[i] > highest_votes) 
-			highest_votes = i;
-	}
-	int min_value =  *(min_element(candidates.begin()+1, candidates.end()));
-	winners.push_back(highest_votes);
-	return winners;
+}
 
+bool check_losers(vector<int> losers, Ballot &b)
+{
+	vector<int> v = b.getBallot();
+	for(unsigned int i = 1; i < losers.size(); i++)
+	{
+		if (losers[i] == 1){
+			if (v[b.current_counted_index] == (int)i){
+				b.current_counted_index++;
+				return true;}
+			}
+
+	}
+	return false;
 }
 
 // -------------------------------
@@ -160,8 +210,9 @@ void run_elections(istream& in, ostream& out)
 	vector<Ballot> ballot_list = get_ballot_list(in);
 	vector<int> winner = evaluate(ballot_list, num_candidates);
 	// print_candidate_list(candidates);
-	//print_ballot_list(ballot_list);
-	out << candidates[winner[0]];
+	// print_ballot_list(ballot_list);
+	for(unsigned int i = 0; i < winner.size(); i++)
+		out << candidates[winner[i]] << endl;
 
 
 }

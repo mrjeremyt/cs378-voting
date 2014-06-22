@@ -48,4 +48,6 @@ void print_candidate_list(vector<string> candidate_list);
 
 vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates);
 
+bool check_losers(vector<int> losers, Ballot &b);
+
 #endif // Voting_h
