@@ -19,6 +19,8 @@
 #include <string>
 #include <sstream>
 #include <iterator>
+#include <array>
+#include <vector>
 using namespace std;
 
 

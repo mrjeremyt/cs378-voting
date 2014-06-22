@@ -41,10 +41,12 @@ vector<int> Ballot::getBallot(){return vec;}
 
 vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 {
-	vector<int> winners;
-	vector<int> candidates;
-	for(int i = 0; i < num_candidates+1; i++){candidates.push_back(0);}
-	for(unsigned int i = 0; i < ballot_list.size(); i++)
+	int majority = (ceil(ballot_list.size())/ceil(num_candidates)) + 1;
+	vector<int> winners; //List of winners, based on cand. index.
+	vector<int> candidates; //Stores tally of each candidate based on cand. index.
+	for(int i = 0; i < num_candidates+1; i++) //Placing 0s until we count ballots.
+		{candidates.push_back(0);}
+	for(unsigned int i = 0; i < ballot_list.size(); i++) //Countes votes for each ballot.
 	{
 		Ballot b = ballot_list[i];
 		vector<int> v = b.getBallot();
@@ -54,12 +56,14 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 
 	int highest_votes = -1;
 	for(unsigned int i = 1; i < candidates.size(); i++)
-		{
-			if(candidates[i] > highest_votes) 
-				highest_votes = i-1;
-		}
+	{
+		if(candidates[i] > highest_votes) 
+			highest_votes = i;
+	}
+	int min_value =  *(min_element(candidates.begin()+1, candidates.end()));
 	winners.push_back(highest_votes);
 	return winners;
+
 }
 
 // -------------------------------
@@ -120,6 +124,7 @@ void print_candidate_list(vector<string> candidate_list)
 vector<string> read_candidates(istream& in, int num_candidates)
 {
 	vector<string> candidates;
+	candidates.push_back("0");
 	while(num_candidates > 0)
 	{
 		string a;
@@ -154,7 +159,7 @@ void run_elections(istream& in, ostream& out)
 	candidates = read_candidates(in, num_candidates);
 	vector<Ballot> ballot_list = get_ballot_list(in);
 	vector<int> winner = evaluate(ballot_list, num_candidates);
-	//print_candidate_list(candidates);
+	// print_candidate_list(candidates);
 	//print_ballot_list(ballot_list);
 	out << candidates[winner[0]];
 
