@@ -131,17 +131,6 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 				return winners;
 			}
 		}
-		if(while_check == 2)
-		{
-			for(unsigned int i = 1; i < candidates.size(); i++)
-			{
-				if (losers[i] == 1)
-					continue;
-				else 
-					winners.push_back(i);
-			}
-			return winners;
-		}
 		int min_value =  100000000;
 		int temp = 0;
 		for(unsigned int i = 1; i < candidates.size(); i++)
