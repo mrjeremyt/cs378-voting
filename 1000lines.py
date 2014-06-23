@@ -26,7 +26,8 @@ def name_list_maker(num_candidates):
 	return candidates
  
 def ballots(num_candidates):
-	weight = num_candidates * 25
+	w = input()
+	weight = num_candidates * int(w)
 	ballot_list = []
 	while(weight > 0):
 		s = set()

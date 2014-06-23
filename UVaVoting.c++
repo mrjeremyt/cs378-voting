@@ -79,6 +79,9 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 		{losers.push_back(0);}
 	int size_of_losers = 0;
 	int while_check = (num_candidates);
+	int tie_value = ballot_list.size() / (num_candidates - size_of_losers);
+	int tie_remainder = ballot_list.size() % (num_candidates - size_of_losers);
+	bool good_tie = true;
 	while(while_check >= 2)
 	{
 		// cout << "while_check: " << while_check << endl;
@@ -103,7 +106,28 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 			winners.push_back(highest_votes);
 			return winners;	
 		}
-
+		//Calculate tie, if all have tie value, return all as winners.
+		tie_remainder = ballot_list.size() % (num_candidates - size_of_losers);
+		if (tie_remainder > 0){
+			tie_value = ballot_list.size() / (num_candidates - size_of_losers);
+			for(unsigned int i = 1; i < candidates.size(); i++)
+			{
+				if (candidates[i] == tie_value)
+					continue;
+				else
+					good_tie = false;
+			}	
+			if (good_tie){
+				for(unsigned int i = 1; i < candidates.size(); i++)
+				{
+					if (losers[i] == 1)
+						continue;
+					else 
+						winners.push_back(i);
+				}
+				return winners;
+			}
+		}
 		if(while_check == 2)
 		{
 			for(unsigned int i = 1; i < candidates.size(); i++)
