@@ -236,3 +236,39 @@ TEST(Voting, get_ballot_list_4)
     ASSERT_EQ(v2, returned_2);
     ASSERT_EQ(v3, returned_3);
 }
+
+TEST(Voting, evaluate_1)
+{//test for the kick then tie
+    std::istringstream r("1 3 2\n2 1 3\n3 2 1\n3 1 2\n2 1 3\n2 3 1\n");
+    std::vector<Ballot> v = get_ballot_list(r);
+    std::vector<int> answer = evaluate(v, 3);
+    std::vector<int> test = {2, 3};
+    ASSERT_EQ(test, answer);
+}
+
+TEST(Voting, evaluate_2)
+{//straight tie
+    std::istringstream r("1 2 3\n1 2 3\n2 1 3\n2 1 3\n3 2 1\n3 2 1\n");
+    std::vector<Ballot> v = get_ballot_list(r);
+    std::vector<int> answer = evaluate(v, 3);
+    std::vector<int> test = {1, 2, 3};
+    ASSERT_EQ(test, answer);
+}
+
+TEST(Voting, evaluate_3)
+{//blog election
+    std::istringstream r("1 2 3 4 5\n2 3 1 4 5\n2 1 3 4 5\n4 5 3 1 2\n5 4 3 2 1\n1 3 2 4 5\n");
+    std::vector<Ballot> v = get_ballot_list(r);
+    std::vector<int> answer = evaluate(v, 3);
+    std::vector<int> test = {1, 2};
+    ASSERT_EQ(test, answer);
+}
+
+TEST(Voting, evaluate_4)
+{//simple majority election
+    std::istringstream r("1 2\n2 1\n2 1\n1 2\n2 1\n2 1\n");
+    std::vector<Ballot> v = get_ballot_list(r);
+    std::vector<int> answer = evaluate(v, 3);
+    std::vector<int> test = {2};
+    ASSERT_EQ(test, answer);
+}
