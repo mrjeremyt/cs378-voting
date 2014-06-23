@@ -48,5 +48,6 @@ int main()
             cout << "\n" << endl;
 		num_elections--;
 	}
+    cout << "\n";
 	return 0;
 }

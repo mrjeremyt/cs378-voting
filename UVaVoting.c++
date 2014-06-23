@@ -82,7 +82,7 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 	int tie_value = ballot_list.size() / (num_candidates - size_of_losers);
 	int tie_remainder = ballot_list.size() % (num_candidates - size_of_losers);
 	bool good_tie = true;
-	while(while_check >= 2)
+	while(true)
 	{
 		// cout << "while_check: " << while_check << endl;
 		for(unsigned int i = 0; i < ballot_list.size(); i++) //Countes votes for each ballot.
@@ -108,11 +108,14 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 		}
 		//Calculate tie, if all have tie value, return all as winners.
 		tie_remainder = ballot_list.size() % (num_candidates - size_of_losers);
-		if (tie_remainder > 0){
+		// cout << "Tie remainder: " << tie_remainder << endl;
+		good_tie = true;
+		if (tie_remainder == 0){
 			tie_value = ballot_list.size() / (num_candidates - size_of_losers);
+			// cout << "Tie value: " << tie_value << endl;
 			for(unsigned int i = 1; i < candidates.size(); i++)
 			{
-				if (candidates[i] == tie_value)
+				if (candidates[i] == tie_value || losers[i] == 1)
 					continue;
 				else
 					good_tie = false;
@@ -329,5 +332,6 @@ int main()
             cout << "\n" << endl;
 		num_elections--;
 	}
+    cout << "\n";
 	return 0;
 }
