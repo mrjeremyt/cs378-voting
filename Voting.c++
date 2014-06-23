@@ -48,11 +48,14 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 		{candidates.push_back(0);}
 	
 	vector<int> losers;
-	losers.push_back(0);
-	int size_of_losers = 1;
-	int while_check = (num_candidates - (size_of_losers - 1));
+	losers.reserve(20);
+	for(int i = 0; i < num_candidates+1; i++) //Placing 0s until we count ballots.
+		{losers.push_back(0);}
+	int size_of_losers = 0;
+	int while_check = (num_candidates);
 	while(while_check >= 2)
 	{
+		// cout << "while_check: " << while_check << endl;
 		for(unsigned int i = 0; i < ballot_list.size(); i++) //Countes votes for each ballot.
 		{
 			Ballot b = ballot_list[i];
@@ -67,64 +70,84 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 				highest_votes = i;
 		}
 
-		cout << "majority: " << majority << endl;
-		cout << "winner: " << candidates[highest_votes] << endl;
+		// cout << "majority: " << majority << endl;
+		// cout << "winner: " << candidates[highest_votes] << endl;
 		if(candidates[highest_votes] >= majority) //Winner
 		{
 			winners.push_back(highest_votes);
 			return winners;	
 		}
 
-		cout << "while_check: " << while_check << endl;
 		if(while_check == 2)
 		{
-			for(unsigned int i = 0; i < candidates.size(); i++)
+			for(unsigned int i = 1; i < candidates.size(); i++)
 			{
-				for(unsigned int j = 0; j < losers.size(); j++)
-				{
-					if(losers[j] == 1)
-						if(j != i)
-							winners.push_back(i);
-				}
+				if (losers[i] == 1)
+					continue;
+				else 
+					winners.push_back(i);
 			}
-			for(auto elem: winners){cout << winners[elem];}
 			return winners;
 		}
-
-		int min_value =  *(min_element(candidates.begin()+1, candidates.end()));
+		int min_value =  100000000;
+		int temp = 0;
 		for(unsigned int i = 1; i < candidates.size(); i++)
 		{
-			cout << "setting loser" << endl;
-			cout << "loser size: " << losers.size() << endl;
-			if(candidates[i] == min_value)
+			if (losers[i] == 1)
+				continue;
+			else
+			{
+				temp = candidates[i];
+				if (temp < min_value)
+					min_value = temp;
+			}
+		}
+		// cout << "Min value: " << min_value << endl;
+		for(unsigned int i = 1; i < candidates.size(); i++)
+		{
+			// cout << "setting loser" << endl;
+			// cout << "loser size: " << size_of_losers << endl;
+			if(candidates[i] == min_value) //This is finding the loser.
 			{
 				losers[i] = 1;
 				size_of_losers++;
 			}
-			cout << "loser size: " << losers.size() << endl;
+			// cout << "loser size: " << size_of_losers << endl;
 		}
-		for(unsigned int i = 0; i < ballot_list.size(); i++)
+		for(unsigned int i = 0; i < ballot_list.size(); i++) //I think this works.
 		{
-			cout << "in the loosers kick" << endl;
-			Ballot b = ballot_list[i];
+			// cout << "in the loosers kick" << endl;
+			Ballot &b = ballot_list[i];
 			bool increased_index = true;
 			while (increased_index)
-			{
 				increased_index = check_losers(losers,b, size_of_losers);
-			}
-
+			// cout << "This is where the ballot pos is: " << b.current_counted_index << endl;
 		}
+		// cout << "End of while loop" << endl;
+		while_check = num_candidates - size_of_losers;
+		// for(unsigned int i = 0; i < ballot_list.size(); i++)
+		// {
+		// 	Ballot b = ballot_list[i];
+		// 	cout << b.current_counted_index << endl;
+		// }
+		candidates.clear();
+		for(int i = 0; i < num_candidates+1; i++) //Placing 0s until we count ballots.
+			{candidates.push_back(0);}
 	}
 
 }
 
+/* This checks the ballot position to make sure it doesn't point to a loser. Advances
+current_counted_index of the ballot if it does.*/
 bool check_losers(vector<int> losers, Ballot &b, int size_of_losers)
 {
 	vector<int> v = b.getBallot();
-	for(unsigned int i = 1; i < size_of_losers; i++)
+	for(unsigned int i = 1; i < losers.size(); i++)
 	{
-		if (losers[i] == 1){
-			if (v[b.current_counted_index] == (int)i){
+		// cout << "Loser in check_losers: "<< losers[i] << endl;
+		if (losers[i] == 1)
+			{
+				if (v[b.current_counted_index] == (int)i){
 				b.current_counted_index++;
 				return true;}
 			}
