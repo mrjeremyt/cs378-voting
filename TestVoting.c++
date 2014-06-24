@@ -48,6 +48,16 @@ To obtain coverage of the test:
 
 #include "Voting.h"
 
+class Ballot
+{
+public:
+    Ballot(vector<int>& v);
+    vector<int> vec;
+    //~Ballot();
+    vector<int> getBallot();
+    int current_counted_index;
+};
+
 using namespace std;
 
 // -------------------
@@ -259,7 +269,7 @@ TEST(Voting, evaluate_3)
 {//blog election
     std::istringstream r("1 2 3 4 5\n2 3 1 4 5\n2 1 3 4 5\n4 5 3 1 2\n5 4 3 2 1\n1 3 2 4 5\n");
     std::vector<Ballot> v = get_ballot_list(r);
-    std::vector<int> answer = evaluate(v, 3);
+    std::vector<int> answer = evaluate(v, 5);
     std::vector<int> test = {1, 2};
     ASSERT_EQ(test, answer);
 }

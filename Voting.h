@@ -14,25 +14,15 @@
 // --------
 #include <cassert>  // assert
 #include <iostream> // endl, istream, ostream
-#include <utility>  // make_pair, pair
 #include <algorithm>
 #include <string>
 #include <sstream>
 #include <iterator>
-#include <array>
 #include <vector>
 using namespace std;
 
+class Ballot;
 
-class Ballot
-{
-public:
-	Ballot(vector<int>& v);
-	vector<int> vec;
-	//~Ballot();
-	vector<int> getBallot();
-	int current_counted_index;
-};
 
 void run_elections(istream&, ostream&);
 
@@ -48,6 +38,6 @@ void print_candidate_list(vector<string> candidate_list);
 
 vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates);
 
-bool check_losers(vector<int> losers, Ballot &b, int);
+bool check_losers(vector<int> losers, Ballot &b, vector<vector<Ballot>>);
 
 #endif // Voting_h
