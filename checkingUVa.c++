@@ -48,7 +48,7 @@ vector<int> Ballot::getBallot(){return vec;}
 
 /* This checks the ballot position to make sure it doesn't point to a loser. Advances
 current_counted_index of the ballot if it does.*/
-void check_losers(vector<vector<Ballot>> &all_ballots, int index, vector<int> losers)
+void check_losers(vector<vector<Ballot>> &all_ballots, int index, vector<int> &losers)
 {
 	// cout << "index: " << index << endl;
 	vector<Ballot> v = all_ballots[index];
@@ -61,19 +61,20 @@ void check_losers(vector<vector<Ballot>> &all_ballots, int index, vector<int> lo
 		{
 			vector<int>::iterator it;
 			it = find (losers.begin(), losers.end(), sheet[b.current_counted_index]);
-			if(*it == 0 || *it > (int)losers.size())
+			if(*it <= 0 || *it >= (int)losers.size())
 			{
+				//cout << "false" << endl;
 				check = false;
 			}
 			else
 			{
 				// cout << "advancing counter" << endl;
-				// cout<< "iterator: " << *it << endl;
+				//cout<< "iterator: " << *it << endl;
 				b.current_counted_index++;
 				check = true;
 			}
 		}
-		// cout << "current vote: " << sheet[b.current_counted_index] << endl;
+		//cout << "current vote: " << sheet[b.current_counted_index] << endl;
 		all_ballots[sheet[b.current_counted_index]].push_back(b);
 	}
 	all_ballots[index].clear();
