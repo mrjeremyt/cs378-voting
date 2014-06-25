@@ -207,26 +207,34 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 		for(int i = 1; i < (int)all_ballots.size(); i++)
 		{
 			// cout << "size of losers: " << size_of_losers << endl;
+			for(auto elem: losers){cout << losers[elem] << " ";}
+			cout << endl;
 			if(losers[i] == i)
 			{
 				Bag &bg = all_ballots[i];
 				for(int j = 0; j < bg.length(); j++)
 				{
 					Ballot &b = ballot_list[bg.get(j)];
-					bool check = true;
-					while(check)
+					// cout << "ballot's current candidate: " << b.selected_candidate() << endl;
+					while(true)
 					{
 						vector<int>::iterator it;
 						it = find(losers.begin(), losers.end(), b.selected_candidate());
 						if(*it <= 0 || *it >= (int)losers.size())
-							check = false;
+							break;
 						else
 						{
-							b.current_counted_index++;
-							check = true;
+							// cout << "value of *it: " << *it << endl;
+							if(b.selected_candidate() == *it)
+							{
+								b.current_counted_index++;
+								continue;
+							}
+							else
+								break;
 						}
 					}
-					all_ballots[b.selected_candidate()].add(b.current_counted_index);
+					all_ballots[b.selected_candidate()].add(bg.get(j));
 				}
 				all_ballots[i].cleanup();
 			}
