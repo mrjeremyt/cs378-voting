@@ -5,6 +5,10 @@
 // Daniel Durbin
 // --------------------------------
 
+// g++-4.7 -fprofile-arcs -ftest-coverage -pedantic -std=c++11 -ggdb3 -Wall maybeThisWorks?.c++ -o maybeThisWorks?
+
+
+
 // --------
 // includes
 // --------
@@ -29,9 +33,9 @@ class Ballot
 public:
 	Ballot(vector<int>& v);
 	vector<int> vec;
-	//~Ballot();
-	vector<int> getBallot();
+	vector<int> getBallotVector();
 	int current_counted_index;
+	int selected_candidate();
 };
 
 Ballot::Ballot(vector<int>& v)
@@ -40,193 +44,181 @@ Ballot::Ballot(vector<int>& v)
 	current_counted_index = 0;
 }
 
-vector<int> Ballot::getBallot(){return vec;}
+vector<int> Ballot::getBallotVector(){return vec;}
+int Ballot::selected_candidate(){return vec[current_counted_index];}
 
-//---------------------------
-// helper method for evaluate
-//---------------------------
 
-/* This checks the ballot position to make sure it doesn't point to a loser. Advances
-current_counted_index of the ballot if it does.*/
-void check_losers(vector<vector<Ballot>> &all_ballots, int index, vector<int> &losers)
+
+class Bag
 {
-	// cout << "index: " << index << endl;
-	vector<Ballot> v = all_ballots[index];
-	for(unsigned int i = 0; i < v.size(); i++)
-	{
-		Ballot b = v[i];
-		vector<int> sheet = b.getBallot();
-		bool check = true;
-		while(check)
-		{
-			vector<int>::iterator it;
-			it = find (losers.begin(), losers.end(), sheet[b.current_counted_index]);
-			if(*it <= 0 || *it >= (int)losers.size())
-			{
-				//cout << "false" << endl;
-				check = false;
-			}
-			else
-			{
-				// cout << "advancing counter" << endl;
-				//cout<< "iterator: " << *it << endl;
-				b.current_counted_index++;
-				check = true;
-			}
-		}
-		//cout << "current vote: " << sheet[b.current_counted_index] << endl;
-		all_ballots[sheet[b.current_counted_index]].push_back(b);
-	}
-	all_ballots[index].clear();
+public:
+	Bag();
+	vector<Ballot> v;
+	int size;
+	Ballot getBallot(int i);
+	void add(Ballot &b);
+	int length();
+	void cleanup();
+};
+
+Bag::Bag(){size = 0;}
+
+Ballot Bag::getBallot(int i){return v[i];}
+
+int Bag::length(){return size;}
+
+void Bag::add(Ballot &b)
+{
+	this->v.push_back(b);
+	this->size++;
 }
 
-// ----------------------------------
-// evaluates the ballots for a winner
-// ----------------------------------
+void Bag::cleanup(){v.clear();}
+
 
 vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 {
+	//commonly used variable declaration
+	vector<int> winners;
+	vector<int> candidates;
+	vector<int> losers;
 	int size_of_ballot_list = ballot_list.size();
+	int size_of_losers;
+	int size_of_candidates;
+	int tie_value;
+	int tie_remainder;
+	bool good_tie;
+	vector<Bag> all_ballots;
+	int majority;
 
-	//setup the bag that holds all the bags
-	vector<vector<Ballot>> all_ballots;
+	//variable initialization for those that need it
+	majority = ceil(size_of_ballot_list/2) + 1;
+	size_of_losers = 0;
 	for(int i = 0; i <= num_candidates; i++)
 	{
-		vector<Ballot> v;
-		all_ballots.push_back(v);
+		candidates.push_back(0); 
+		losers.push_back(0);
+		Bag b;
+		all_ballots.push_back(b);
 	}
 
-	//go through all the ballots and sort them into the bags
+	size_of_candidates = candidates.size();
+
+	//puts all the ballots in ballot_list into bags that can be analyzed in the function
 	for(int i = 0; i < size_of_ballot_list; i++)
 	{
 		Ballot b = ballot_list[i];
-		vector<int> ballot = b.getBallot();
-		int bag_num = ballot[b.current_counted_index];
-		all_ballots[bag_num].push_back(ballot);
+		int bag_number = b.selected_candidate();
+		// all_ballots[bag_number].add(b);
+		Bag bg = all_ballots[bag_number];
+		bg.add(b);
+		//bg.size++;
 	}
 
-	int majority = ceil(size_of_ballot_list / 2) + 1;
-	vector<int> winners; //List of winners, based on cand. index.
-	vector<int> candidates; //Stores tally of each candidate based on cand. index.
-	for(int i = 0; i < num_candidates+1; i++){candidates.push_back(0);} //Placing 0s until we count ballots.
-	vector<int> losers;
-	losers.reserve(20);
-	for(int i = 0; i <= num_candidates; i++){losers.push_back(0);} //Placing 0s until we count ballots.
-	int size_of_losers = 0;
-	int tie_value;
-	int tie_remainder;
-	bool good_tie = true;
-	while(true)
-	{	
-		for(unsigned int i = 1; i < all_ballots.size(); i++) //Counts votes for each ballot.
-		{
-			vector<Ballot> bag = all_ballots[i];
-			candidates[i] = bag.size();
-			// cout << "bag size: " << bag.size() << endl;
-		}
-		int highest_votes = -1;
-		for(unsigned int i = 1; i < candidates.size(); i++)
-		{
-			if(candidates[i] > candidates[highest_votes])
-				highest_votes = i;
-		}
-		// cout << "majority: " << majority << endl;
-		// cout << "highest_votes: " << candidates[highest_votes] << endl;
 
-		if(candidates[highest_votes] >= majority) //Winner
+	//this while loop controls all the rounds
+	while(true)
+	{
+		//declaration of variables used in the while loop
+		int highest_vote_index = -1;
+
+
+		//loop that counts the number of ballots for each candidate
+		for(int i = 1; i < (int)all_ballots.size(); i++){candidates[i] = all_ballots[i].length();}
+		
+		//finds the/a candidate with the most votes
+		for(int i = 1; i < size_of_candidates; i++)
 		{
-			winners.push_back(highest_votes);
-			return winners;	
+			if(candidates[i] > candidates[highest_vote_index]){highest_vote_index = i;}
 		}
-		//Calculate tie, if all have tie value, return all as winners.
+
+		//checks to see if we have a clear winner
+		if(candidates[highest_vote_index] >= majority)
+		{
+			winners.push_back(highest_vote_index);
+			return winners;
+		}
+
+		//else, might have a tie
 		tie_remainder = size_of_ballot_list % (num_candidates - size_of_losers);
 		good_tie = true;
-		if (tie_remainder == 0){
+		//see if it's possible to have a tie
+		if(tie_remainder == 0)
+		{
 			tie_value = size_of_ballot_list / (num_candidates - size_of_losers);
-			for(unsigned int i = 1; i < candidates.size(); i++)
+			for(int i = 1; i < size_of_candidates; i++)
 			{
-				if (candidates[i] == tie_value || losers[i] == (int)i)
+				if(candidates[i] == tie_value || losers[i] == (int)i)
 					continue;
 				else
 					good_tie = false;
-			}	
-			if(good_tie){
-				for(unsigned int i = 1; i < candidates.size(); i++)
+			}
+			if(good_tie)
+			{
+				for(int i = 1; i < size_of_candidates; i++)
 				{
 					if(losers[i] == (int)i)
 						continue;
-					else 
+					else
 						winners.push_back(i);
 				}
 				return winners;
 			}
 		}
-		int min_value = 100000000;
-		int temp = 0;
-		for(unsigned int i = 1; i < candidates.size(); i++)//calculates the min value of the remaining valid candidates
+
+		//else we need to kick the looser and change the vote
+
+		//first, find the minimum value
+		int min_value = 10000000;
+		for(int i = 1; i < size_of_candidates; i++)
 		{
-			if(losers[i] == (int)i){continue;}
-			else
-			{
-				temp = candidates[i];
-				if(temp < min_value){min_value = temp;}
-			}
+			if(losers[i] == i){continue;}
+			else{if(candidates[i] < min_value){min_value = candidates[i];}}
 		}
-		// cout << "min_value: " << min_value << endl;
-		for(unsigned int i = 1; i < candidates.size(); i++)
+
+		for(int i = 1; i < size_of_candidates; i++)
 		{
-			if(candidates[i] == min_value) //This is finding the loser.
+			if(candidates[i] == min_value)
 			{
 				losers[i] = i;
 				size_of_losers++;
 			}
 		}
-		cout << "size_of_losers: " << size_of_losers << endl;
-		//moves the current counted index forward for the losing candidates and moves its ballot to its new bag
-		for(unsigned int i = 1; i < all_ballots.size(); i++) 
+
+		//losers have been found and incremented. time to advance the vote
+		for(int i = 1; i < (int)all_ballots.size(); i++)
 		{
-			// cout << "loser for loop" << endl;
-			if(losers[i] == (int)i)
+			if(losers[i] == i)
 			{
-				// cout << "index: " << index << endl;
-				vector<Ballot> &v = all_ballots[i];
-				for(unsigned int i = 0; i < v.size(); i++)
+				Bag &bg = all_ballots[i];
+				for(int j = 0; j < bg.length(); j++)
 				{
-					Ballot &b = v[i];
-					vector<int> sheet = b.getBallot();
+					Ballot b = bg.getBallot(j);
 					bool check = true;
 					while(check)
 					{
 						vector<int>::iterator it;
-						it = find (losers.begin(), losers.end(), sheet[b.current_counted_index]);
+						it = find(losers.begin(), losers.end(), b.selected_candidate());
 						if(*it <= 0 || *it >= (int)losers.size())
-						{
-							//cout << "false" << endl;
 							check = false;
-						}
 						else
 						{
-							// cout << "advancing counter" << endl;
-							//cout<< "iterator: " << *it << endl;
 							b.current_counted_index++;
 							check = true;
 						}
 					}
-					//cout << "current vote: " << sheet[b.current_counted_index] << endl;
-					int all_ballot_index = sheet[b.current_counted_index];
-					all_ballots[all_ballot_index].push_back(b);
+					all_ballots[b.selected_candidate()].add(b);
 				}
-				// vector<Ballot> to_clear = all_ballots[i];
-				// // all_ballots[i].clear();
-				// for(int i = 0; i < (int)to_clear.size(); i++)
-				// 	to_clear[i] = 0;
+				all_ballots[i].cleanup();
 			}
 		}
-		// candidates.clear();
-		// for(int i = 0; i < num_candidates+1; i++){candidates.push_back(0);} //Placing 0s until we count ballots.
-		// cout << "end of while" << endl;
-	}
+		candidates.clear();
+	}		
 }
+
+
+
+
 
 // -------------------------------
 // parses and collects the ballots
@@ -261,7 +253,7 @@ void print_ballot_list(vector<Ballot> ballot_list)
 	for(unsigned int i = 0; i < ballot_list.size(); i++)
 	{
 		Ballot b = ballot_list[i];
-		vector<int> v = b.getBallot();
+		vector<int> v = b.getBallotVector();
 		for(unsigned int j = 0; j < v.size(); j++)
 		{
 			cout << v[j];
