@@ -76,24 +76,6 @@ void Bag::add(int i)
 void Bag::cleanup(){v.clear(); size = 0;}
 
 
-
-// class Candidate
-// {
-// public:
-// 	Candidate();
-// 	vector<int> indexes;
-// 	int length;
-// 	vector<int> getIndexes();
-// 	int length();
-// };
-
-// Candidate::Candidate(){}
-// vector<int> Candidate::getIndexes(){return indexes;}
-// int Candidate::length(){return length;}
-
-
-
-
 vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 {
 	//commonly used variable declaration
@@ -125,8 +107,7 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 	//puts all the ballots in ballot_list into bags that can be analyzed in the function
 	for(int i = 0; i < size_of_ballot_list; i++)
 	{
-		int bag_number = ballot_list[i].selected_candidate();
-		all_ballots[bag_number].add(i);
+		all_ballots[ballot_list[i].selected_candidate()].add(i);
 	}
 
 
@@ -137,7 +118,8 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 
 		//declaration of variables used in the while loop
 		int highest_vote_index = -1;
-
+		tie_remainder = size_of_ballot_list % (num_candidates - size_of_losers);
+		good_tie = true;
 
 		//loop that counts the number of ballots for each candidate
 		for(int i = 1; i < (int)all_ballots.size(); i++){candidates[i] = all_ballots[i].length();}
@@ -156,8 +138,6 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 		}
 
 		//else, might have a tie
-		tie_remainder = size_of_ballot_list % (num_candidates - size_of_losers);
-		good_tie = true;
 		//see if it's possible to have a tie
 		if(tie_remainder == 0)
 		{
@@ -207,39 +187,39 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 		for(int i = 1; i < (int)all_ballots.size(); i++)
 		{
 			// cout << "size of losers: " << size_of_losers << endl;
-			for(auto elem: losers){cout << losers[elem] << " ";}
-			cout << endl;
-			if(losers[i] == i)
+			// for(auto elem: losers){cout << losers[elem] << " ";}
+			// cout << endl;
+			if(losers[i] == i) //indicates this is a losing candidate
 			{
-				Bag &bg = all_ballots[i];
+				Bag &bg = all_ballots[i]; //gets tbe bag of the indexes of the ballots to change
 				for(int j = 0; j < bg.length(); j++)
 				{
-					Ballot &b = ballot_list[bg.get(j)];
+					Ballot &b = ballot_list[bg.get(j)]; //gets the ballot from ballot_list at index from the bag
 					// cout << "ballot's current candidate: " << b.selected_candidate() << endl;
 					while(true)
 					{
 						vector<int>::iterator it;
-						it = find(losers.begin(), losers.end(), b.selected_candidate());
+						it = find(losers.begin(), losers.end(), b.selected_candidate()); //checks that the current candidate is in losers
 						if(*it <= 0 || *it >= (int)losers.size())
-							break;
+							break; //if not then break
 						else
 						{
 							// cout << "value of *it: " << *it << endl;
 							if(b.selected_candidate() == *it)
 							{
-								b.current_counted_index++;
+								b.current_counted_index++; //else increase the index
 								continue;
 							}
 							else
-								break;
+								break; //a conditional that prevents the while loop from infinate looping
 						}
 					}
-					all_ballots[b.selected_candidate()].add(bg.get(j));
+					all_ballots[b.selected_candidate()].add(bg.get(j)); //adds the new index of the ballot to the new bag for its selected candidate
 				}
 				all_ballots[i].cleanup();
 			}
 		}
-		candidates.clear();
+		// candidates.clear();
 	}		
 }
 
