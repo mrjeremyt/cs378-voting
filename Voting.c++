@@ -31,6 +31,7 @@ public:
 	Ballot(vector<int>& v);
 	vector<int> vec;
 	vector<int> getBallotVector();
+	vector<int> getBallot();
 	int current_counted_index;
 	int selected_candidate();
 };
@@ -43,6 +44,7 @@ Ballot::Ballot(vector<int>& v)
 
 vector<int> Ballot::getBallotVector(){return vec;}
 int Ballot::selected_candidate(){return vec[current_counted_index];}
+vector<int> Ballot::getBallot(){return vec;}
 
 
 

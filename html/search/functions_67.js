@@ -1,0 +1,8 @@
+var searchData=
+[
+  ['get',['get',['../classBag.html#aeb9b4da3a5d84588ad590cd7ea510d49',1,'Bag::get(int i)'],['../classBag.html#aeb9b4da3a5d84588ad590cd7ea510d49',1,'Bag::get(int i)'],['../classBag.html#aeb9b4da3a5d84588ad590cd7ea510d49',1,'Bag::get(int i)']]],
+  ['get_5fballot_5flist',['get_ballot_list',['../checkingUVa_8c_09_09.html#adcd39e085d9bedc29dba4f1906428982',1,'get_ballot_list(istream &amp;in):&#160;checkingUVa.c++'],['../maybeThisWorks_04_8c_09_09.html#adcd39e085d9bedc29dba4f1906428982',1,'get_ballot_list(istream &amp;in):&#160;maybeThisWorks?.c++'],['../UVaVoting_8c_09_09.html#adcd39e085d9bedc29dba4f1906428982',1,'get_ballot_list(istream &amp;in):&#160;UVaVoting.c++'],['../Voting_8c_09_09.html#adcd39e085d9bedc29dba4f1906428982',1,'get_ballot_list(istream &amp;in):&#160;Voting.c++'],['../Voting_8h.html#adcd39e085d9bedc29dba4f1906428982',1,'get_ballot_list(istream &amp;in):&#160;checkingUVa.c++']]],
+  ['get_5fnum_5fcandidates',['get_num_candidates',['../namespace1000lines.html#a99d83d6d106abb18477abf3360fc78f8',1,'1000lines']]],
+  ['getballot',['getBallot',['../classBallot.html#a0911213805694796fc87d6ac6cec4aea',1,'Ballot::getBallot()'],['../classBallot.html#a773892b3750bcf0d92053ba0097e5453',1,'Ballot::getBallot()'],['../classBallot.html#a773892b3750bcf0d92053ba0097e5453',1,'Ballot::getBallot()']]],
+  ['getballotvector',['getBallotVector',['../classBallot.html#a6b506fd1d9f87ae197d6e316f966b244',1,'Ballot::getBallotVector()'],['../classBallot.html#a177ad8fc8b85d389974871308815b080',1,'Ballot::getBallotVector()'],['../classBallot.html#a177ad8fc8b85d389974871308815b080',1,'Ballot::getBallotVector()']]]
+];

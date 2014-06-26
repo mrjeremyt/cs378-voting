@@ -114,8 +114,6 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 	//this while loop controls all the rounds
 	while(true)
 	{
-		// cout << "while - size of losers: " << size_of_losers << endl;
-
 		//declaration of variables used in the while loop
 		int highest_vote_index = -1;
 		tie_remainder = size_of_ballot_list % (num_candidates - size_of_losers);
@@ -174,8 +172,6 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 
 		for(int i = 1; i < size_of_candidates; i++)
 		{	
-			// cout << "min value: " << min_value << endl;
-			// cout << "candidates[i]: " << candidates[i] << endl;
 			if(candidates[i] == min_value)
 			{
 				losers[i] = i;
@@ -186,29 +182,20 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 		//losers have been found and incremented. time to advance the vote
 		for(int i = 1; i < (int)all_ballots.size(); i++)
 		{
-			// cout << "size of losers: " << size_of_losers << endl;
-			// for(auto elem: losers){cout << losers[elem] << " ";}
-			// cout << endl;
 			if(losers[i] == i) //indicates this is a losing candidate
 			{
 				Bag &bg = all_ballots[i]; //gets tbe bag of the indexes of the ballots to change
 				for(int j = 0; j < bg.length(); j++)
 				{
 					Ballot &b = ballot_list[bg.get(j)]; //gets the ballot from ballot_list at index from the bag
-					// cout << "ballot's current candidate: " << b.selected_candidate() << endl;
 					bool check = true;
 					while(check)
 					{
-						// vector<int>::iterator it;
-						// it = find(losers.begin(), losers.end(), b.selected_candidate()); //checks that the current candidate is in losers
-
+						//checks that the current candidate is in losers
 						for(int k = 1; k < (int)losers.size(); k++)
 						{
-							// cout << "in the for loop" << endl;
-							// cout << "selected candidate: " << b.selected_candidate() << endl;
 							if(losers[k] == b.selected_candidate())
 							{
-								// cout << "advanding the indeX!" << endl;
 								b.current_counted_index++;
 								check = true;
 								break;
@@ -219,26 +206,8 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 								break;
 							}
 						}
-
-
-
-
-						// if(*it <= 0 || *it >= (int)losers.size())
-						// 	break; //if not then break
-						// else
-						// {
-						// 	// cout << "value of *it: " << *it << endl;
-						// 	if(b.selected_candidate() == *it)
-						// 	{
-						// 		b.current_counted_index++; //else increase the index
-						// 		continue;
-						// 	}
-						// 	else
-						// 		break; //a conditional that prevents the while loop from infinate looping
-						// }
 					}
 					int ind = bg.get(j);
-					// cout << "candidate: " << b.selected_candidate() << endl;
 					all_ballots[b.selected_candidate()].add(ind); //adds the new index of the ballot to the new bag for its selected candidate
 				}
 				all_ballots[i].cleanup();
