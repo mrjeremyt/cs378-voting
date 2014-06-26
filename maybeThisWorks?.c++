@@ -69,8 +69,8 @@ int Bag::length(){return size;}
 
 void Bag::add(int i)
 {
-	this->v.push_back(i);
-	this->size++;
+	v.push_back(i);
+	size++;
 }
 
 void Bag::cleanup(){v.clear(); size = 0;}
@@ -196,30 +196,55 @@ vector<int> evaluate(vector<Ballot> ballot_list, int num_candidates)
 				{
 					Ballot &b = ballot_list[bg.get(j)]; //gets the ballot from ballot_list at index from the bag
 					// cout << "ballot's current candidate: " << b.selected_candidate() << endl;
-					while(true)
+					bool check = true;
+					while(check)
 					{
-						vector<int>::iterator it;
-						it = find(losers.begin(), losers.end(), b.selected_candidate()); //checks that the current candidate is in losers
-						if(*it <= 0 || *it >= (int)losers.size())
-							break; //if not then break
-						else
+						// vector<int>::iterator it;
+						// it = find(losers.begin(), losers.end(), b.selected_candidate()); //checks that the current candidate is in losers
+
+						for(int k = 1; k < (int)losers.size(); k++)
 						{
-							// cout << "value of *it: " << *it << endl;
-							if(b.selected_candidate() == *it)
+							// cout << "in the for loop" << endl;
+							// cout << "selected candidate: " << b.selected_candidate() << endl;
+							if(losers[k] == b.selected_candidate())
 							{
-								b.current_counted_index++; //else increase the index
-								continue;
+								// cout << "advanding the indeX!" << endl;
+								b.current_counted_index++;
+								check = true;
+								break;
 							}
-							else
-								break; //a conditional that prevents the while loop from infinate looping
+
+							if(k == (int)(losers.size() -1))
+							{	check = false;
+								break;
+							}
 						}
+
+
+
+
+						// if(*it <= 0 || *it >= (int)losers.size())
+						// 	break; //if not then break
+						// else
+						// {
+						// 	// cout << "value of *it: " << *it << endl;
+						// 	if(b.selected_candidate() == *it)
+						// 	{
+						// 		b.current_counted_index++; //else increase the index
+						// 		continue;
+						// 	}
+						// 	else
+						// 		break; //a conditional that prevents the while loop from infinate looping
+						// }
 					}
-					all_ballots[b.selected_candidate()].add(bg.get(j)); //adds the new index of the ballot to the new bag for its selected candidate
+					int ind = bg.get(j);
+					// cout << "candidate: " << b.selected_candidate() << endl;
+					all_ballots[b.selected_candidate()].add(ind); //adds the new index of the ballot to the new bag for its selected candidate
 				}
 				all_ballots[i].cleanup();
 			}
 		}
-		// candidates.clear();
+		candidates.clear();
 	}		
 }
 

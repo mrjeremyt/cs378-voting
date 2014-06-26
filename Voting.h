@@ -22,6 +22,7 @@
 using namespace std;
 
 class Ballot;
+class Bag;
 
 
 void run_elections(istream&, ostream&);
