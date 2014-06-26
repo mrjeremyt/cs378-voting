@@ -1,0 +1,191 @@
+commit 01d2d17cb9ff04b26b056a63e4f53c7edd106da1
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Thu Jun 26 07:55:03 2014 -0500
+
+    semi-final commit. the one after this will include the git log. all files included. passing UVA with time of 2.089 and passing 5 other's acceptance tests.
+
+commit 50cd5d75a0010e6a119eb73b4403b032d1f17d81
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Wed Jun 25 21:17:10 2014 -0500
+
+    just about done. just waiting on someone else to add their acceptance tests
+
+commit 895e5b00e7b023680f08f8fc3c6709357791d326
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Wed Jun 25 19:50:04 2014 -0500
+
+    cached version worksgit add .git add .git add .git add .! closes #11 closes #15 closes #16 closes #23.
+
+commit 4dac775f82d58bd02d403e7ad46dbabca769d291
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Wed Jun 25 17:45:10 2014 -0500
+
+    added comments to my code to make understanding clearer. closes #21 closes #22.
+
+commit 18ae50525b6a9fbfa69c589c04e5d89fd91edf7e
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Wed Jun 25 16:56:09 2014 -0500
+
+    so damn close.
+
+commit 75d291d19bbb2e29f21461ceb9e605893c395598
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Wed Jun 25 12:52:13 2014 -0500
+
+    better implementation. still failing liems and the 20candidates is off slightly.
+
+commit 75d44e02390858da8bb26c792089aec15c83aecc
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Tue Jun 24 23:03:49 2014 -0500
+
+    have a cleaner verson of the cache algorithm. but still stuck at the floating point error. the function won't add the new vote to the bag and so throws an error when calculating tie_remainder value.
+
+commit 232b7c1004ae726c9768dd5ab074c3a327f30057
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Tue Jun 24 19:00:38 2014 -0500
+
+    I think we have the cache version complete. about to submit to UVa. closes #9 closes #10 closes #13 closes #14 closes #18 closes #19 closes #20
+
+commit 17448269c1adbf31482a94d21c3c436154e69618
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Mon Jun 23 20:15:59 2014 -0500
+
+    working on the cached version
+
+commit 3d53f72291b580949f26e5fbfa98fc618e279ccc
+Author: majisto <majisto@gmail.com>
+Date:   Mon Jun 23 00:18:38 2014 -0500
+
+    Passin UVa.  Pushing before begin the implemntation of a non-linear algorithm.
+
+commit 4846beeafb28ffdb3a228df17fa3bc0f79762f86
+Author: majisto <majisto@gmail.com>
+Date:   Mon Jun 23 00:06:32 2014 -0500
+
+    We passed UVa! WOohoo. Closes #5 Closes #6 Closes #7 Closes #8.
+
+commit e1eeb39da3c1bd09530d54bc27d48a4e08f67a8a
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Sun Jun 22 23:20:20 2014 -0500
+
+    updated the TestVoting file to include newest functions.
+
+commit db15e5fc2f1f5f90d6884d96649e9319a658fbc4
+Author: majisto <majisto@gmail.com>
+Date:   Sun Jun 22 22:30:25 2014 -0500
+
+    Passing all tests, but still not passing the oracle.
+
+commit 76e372e01c6fcc8ab0edf071767c3ba90132d3ff
+Author: majisto <majisto@gmail.com>
+Date:   Sun Jun 22 21:48:59 2014 -0500
+
+    Simple solution passes tests.  Going to submit to Oracle.
+
+commit 9077d0d2c37e3ead190abf2b2e5fe03886f2b1f8
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Sun Jun 22 19:14:21 2014 -0500
+
+    stupid ties
+
+commit c26c237dd0405c223b5289b458de29fab7ab0012
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Sun Jun 22 02:34:14 2014 -0500
+
+    got it to stop looping but still have problems with ties.
+
+commit d7586b3f351f812a67885890a03a15254494ed6b
+Author: majisto <majisto@gmail.com>
+Date:   Sun Jun 22 01:16:23 2014 -0500
+
+    Working on ties still...
+
+commit 58d3ee5c4b05e78ebcd67daeeeddce1cdc65cb59
+Author: majisto <majisto@gmail.com>
+Date:   Sat Jun 21 22:37:45 2014 -0500
+
+    Winners are being chosen.  Still have to figure out ties.
+
+commit d8dbc44d3941759625ba87e9a75b4e48884879ee
+Author: majisto <majisto@gmail.com>
+Date:   Fri Jun 20 22:05:35 2014 -0500
+
+    Fixed the python script to generate elections.
+
+commit 36375ec636e1e786cab18f75ce9be215807a78f4
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Fri Jun 20 21:07:33 2014 -0500
+
+    SIMPLE IS ALMOST THEREgit add .! WOOOO
+
+commit 7e48aa07330e9b174408560dc9f954982752f356
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Fri Jun 20 19:51:08 2014 -0500
+
+    RunVoting compiles and runs. TestVoting compiles and passes all 12 current tests.
+
+commit 1f5d7313ca2a55cdc10f8114ae24686cb9fe03c3
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Fri Jun 20 19:29:24 2014 -0500
+
+    figured out the parsing a string thing. closes #17
+
+commit 4639722f1b6fb71c4e1ee1e6da8f4b236999b095
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Fri Jun 20 19:27:26 2014 -0500
+
+    initial testing framework done. closes #2. closes #3. closes #4.
+
+commit eafe616dac95a7879e06ae6f401739ed0cd0a383
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Fri Jun 20 16:59:04 2014 -0500
+
+    fixed the issues in the header file.
+
+commit 12dddd128ce90b3d02c80623ecca73d422f7aba9
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Fri Jun 20 16:07:11 2014 -0500
+
+    Yay! We have the ballots in vectors.
+
+commit 18407b6fe4d22cf5a674742bfd67abfd602c99a2
+Author: majisto <majisto@gmail.com>
+Date:   Fri Jun 20 14:48:29 2014 -0500
+
+    More work on ballot class.
+
+commit b41fd6a5c9f6a005a786a77bebadde1084d9994e
+Author: majisto <majisto@gmail.com>
+Date:   Thu Jun 19 22:04:43 2014 -0500
+
+    Start of a ballot class.  I/O seems to work.  Have a vector for candidate names. Closes #1
+
+commit 57c590c1683508501273c25e4babfa60b1c814aa
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Thu Jun 19 20:52:36 2014 -0500
+
+    slight formating edits to files
+
+commit aa6f47a899f92c4ec5ce722e476958698b34c31a
+Author: majisto <majisto@gmail.com>
+Date:   Thu Jun 19 19:53:49 2014 -0500
+
+    Starting to write Voting.c++.  Figuring out c++ I/O is a bit trickier than Python.
+
+commit eafcbf1d679d62b678ea5a0f4cc649102cb64234
+Author: majisto <majisto@gmail.com>
+Date:   Thu Jun 19 18:22:15 2014 -0500
+
+    First commit.  Wrote script to generate 1000+ lines of ballots, and have a 50 name list.
+
+commit e0254405730b4abde4d59cef251e93d2ffc2f864
+Author: mrjeremyt <jthompson2214@gmail.com>
+Date:   Thu Jun 19 17:27:50 2014 -0500
+
+    first commit
+
+commit d024e4d6098c1339d77634790744cd8a11e9ad67
+Author: Jeremy Thompson <jthompson2214@gmail.com>
+Date:   Thu Jun 19 17:25:46 2014 -0500
+
+    Initial commit
