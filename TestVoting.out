@@ -1,0 +1,41 @@
+Running main() from gtest_main.cc
+[==========] Running 16 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 16 tests from Voting
+[ RUN      ] Voting.read_num_candidates_1
+[       OK ] Voting.read_num_candidates_1 (0 ms)
+[ RUN      ] Voting.read_num_candidates_2
+[       OK ] Voting.read_num_candidates_2 (0 ms)
+[ RUN      ] Voting.read_num_candidates_3
+[       OK ] Voting.read_num_candidates_3 (0 ms)
+[ RUN      ] Voting.read_num_candidates_4
+[       OK ] Voting.read_num_candidates_4 (0 ms)
+[ RUN      ] Voting.read_candidates_1
+[       OK ] Voting.read_candidates_1 (0 ms)
+[ RUN      ] Voting.read_candidates_2
+[       OK ] Voting.read_candidates_2 (0 ms)
+[ RUN      ] Voting.read_candidates_3
+[       OK ] Voting.read_candidates_3 (0 ms)
+[ RUN      ] Voting.read_candidates_4
+[       OK ] Voting.read_candidates_4 (1 ms)
+[ RUN      ] Voting.get_ballot_list_1
+[       OK ] Voting.get_ballot_list_1 (0 ms)
+[ RUN      ] Voting.get_ballot_list_2
+[       OK ] Voting.get_ballot_list_2 (0 ms)
+[ RUN      ] Voting.get_ballot_list_3
+[       OK ] Voting.get_ballot_list_3 (0 ms)
+[ RUN      ] Voting.get_ballot_list_4
+[       OK ] Voting.get_ballot_list_4 (0 ms)
+[ RUN      ] Voting.evaluate_1
+[       OK ] Voting.evaluate_1 (0 ms)
+[ RUN      ] Voting.evaluate_2
+[       OK ] Voting.evaluate_2 (0 ms)
+[ RUN      ] Voting.evaluate_3
+[       OK ] Voting.evaluate_3 (0 ms)
+[ RUN      ] Voting.evaluate_4
+[       OK ] Voting.evaluate_4 (0 ms)
+[----------] 16 tests from Voting (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 16 tests from 1 test case ran. (1 ms total)
+[  PASSED  ] 16 tests.
